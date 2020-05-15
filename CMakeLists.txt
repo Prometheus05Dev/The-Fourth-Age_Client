@@ -7,4 +7,4 @@ include_directories(libs/)
 include_directories(engine/)
 include_directories(game/)
 
-add_executable(The_Fourth_Age main.c libs/resourcemanager.c libs/matrices.c libs/matrices.h engine/graphics/object.c engine/graphics/object.h engine/graphics/loaders/texture.c engine/graphics/loaders/texture.h engine/graphics/loaders/animation.c engine/graphics/loaders/animation.h engine/graphics/loaders/model.c engine/graphics/loaders/model.h libs/extlibs/stb_image.h)
+add_executable(The_Fourth_Age main.c libs/resourcemanager.c libs/matrices.c engine/graphics/object.c engine/graphics/loaders/texture.c engine/graphics/loaders/animation.c engine/graphics/loaders/model.c engine/graphics/loaders/shader.c)
