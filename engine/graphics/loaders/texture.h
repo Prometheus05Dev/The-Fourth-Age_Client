@@ -19,10 +19,11 @@ int textureNumOffset = 0;
 /* List of texture to quickly be used with the ID */
 struct Texture *textureList;
 
-/* Returns the ID of the texture to be set in the Object struct and adds it to textureList*/
+/* Returns the ID of the texture to be set in the Object struct and adds it to textureList
+ * if it has been already loaded returns the ID*/
 int  TEX_genTexture         (char *path);
 
-void constructGLTexData     (int currentID, struct Texture currentTexture);
+void constructGLTexData     (int currentID, struct Texture *currentTexture);
 
 /* Binds the texture to the GPU */
 void TEX_bindTexture        (int ID);
