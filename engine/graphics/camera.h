@@ -1,8 +1,11 @@
+/* Contains the movement/strafe/rotate and zoom functions of the camera
+ * Calculates the view and projection matrix and returns them */
+
 #ifndef THE_FOURTH_AGE_CAMERA_H
 #define THE_FOURTH_AGE_CAMERA_H
 
 /* Includes the maths file to be able to make vector and matrix calculations */
-#include "maths.h"
+#include <maths.h>
 
 /* Contains the current FOV to be used in the calculation of the projection matrix */
 int fov = 0;

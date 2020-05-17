@@ -15,15 +15,21 @@
 /* Include the ResourceManager to retrieve the paths to pass them to the loaders */
 #include <resourcemanager.h>
 
+/* Include the maths library to calculate the model matrix */
+#include <maths.h>
+
 /* An offset which gets changed every time an object gets removed or added to be able
  * to use static IDs for the game objects */
 int objectOffset = 0;
 
 /* Contains all the necessary object information and OpenGL data */
 struct Object {
-    int modelID;    // To get access to the correct model struct
-    int textureID;  // To get access to the correct texture struct
-    int shaderID;   // To get access to the correct shader struct
+    vec3 position;
+    vec3 scale;
+    vec4 rotation;
+    int  modelID;    // To get access to the correct model struct
+    int  textureID;  // To get access to the correct texture struct
+    int  shaderID;   // To get access to the correct shader struct
 };
 
 /* A list of objects for faster access using the ID */
@@ -34,10 +40,29 @@ struct Object **objectList;
  * Returns the ID of the object
  * Constructs the OpenGL data using loaders
  * changes objectOffset + 1*/
-int  OBJ_addObject          (char *name, int x, int y, int z);
+int  OBJ_addObject          (char *name, float x, float y, float z);
 
-/* Draws the object with the given ID by using the OpenGL data in the appropriate struct */
-void OBJ_drawObject         (int id);
+/* Draws objects if they fit into the given mode(2D or 3D or UI)
+ * Calculates the model matrix and passes it to shader*/
+void OBJ_drawObjects        (int  mode);
+
+/* Transforms the object with the given ID to the given location */
+void OBJ_transformObject    (int id, float x, float y, float z);
+
+/* Scales the object with the given ID to the given scale */
+void OBJ_scaleObject        (int id, float x, float y, float z);
+
+/* Rotates the object with the given ID around the given axis by the given degrees */
+void OBJ_rotateObject       (int id, float degrees, float x, float y, float z);
+
+/* Translates the object with the given ID by the given vector */
+void OBJ_translateObject    (int id, float x, float y, float z);
+
+/* Adds a scale to the object with the given ID by the given vector */
+void OBJ_scaleAddObject     (int id, float x, float y, float z);
+
+/* Adds a rotation to the object with the given ID by the given axis with the given degrees */
+void OBJ_rotateAddObject    (int id, float degrees, float x, float y, float z);
 
 /* Removes the object with the given ID and frees it from the objectList
  * changes objectOffset - 1*/
