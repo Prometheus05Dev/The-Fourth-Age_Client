@@ -11,6 +11,7 @@ char **type;            // Contains the type of the object
 char **texturePaths;    // The path to the appropriate texture
 char **animationPaths;  // The path to the appropriate EAF
 char **modelPaths;      // The path to the appropriate PMF
+char **shaderPaths;     // The path to the appropriate shader
 
 /* The base path of the game assets */
 char *basePath;
@@ -31,5 +32,8 @@ char *RMG_getModel          (char *objectName);
 
 /* Returns the animation path for an object name */
 char *RMG_getAnimation      (char *objectName);
+
+/* Returns the shader path for a shader name */
+char *RMG_getShader         (char *shaderName);
 
 #endif //THE_FOURTH_AGE_RESOURCEMANAGER_H
