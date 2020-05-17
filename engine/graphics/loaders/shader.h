@@ -6,8 +6,8 @@
 
 /* A structure containing the shader name and the shader program ID */
 struct Shader {
-    const char  *name;
-    int         shaderProgram;
+    const char  *name;          // The name of the shader
+    int         shaderProgram;  // The shader program ID
 };
 
 /* Offset to have static shader IDs externally */

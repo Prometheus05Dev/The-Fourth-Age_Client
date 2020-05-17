@@ -6,13 +6,24 @@
 #ifndef THE_FOURTH_AGE_OBJECT_H
 #define THE_FOURTH_AGE_OBJECT_H
 
+/* Include the loaders to load the necessary data into the object structure */
+#include "loaders/model.h"
+#include "loaders/animation.h"
+#include "loaders/shader.h"
+#include "loaders/texture.h"
+
+/* Include the ResourceManager to retrieve the paths to pass them to the loaders */
+#include <resourcemanager.h>
+
 /* An offset which gets changed every time an object gets removed or added to be able
  * to use static IDs for the game objects */
 int objectOffset = 0;
 
 /* Contains all the necessary object information and OpenGL data */
 struct Object {
-
+    int modelID;    // To get access to the correct model struct
+    int textureID;  // To get access to the correct texture struct
+    int shaderID;   // To get access to the correct shader struct
 };
 
 /* A list of objects for faster access using the ID */
