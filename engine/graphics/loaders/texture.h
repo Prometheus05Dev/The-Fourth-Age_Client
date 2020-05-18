@@ -13,9 +13,6 @@ struct Texture {
     GLuint  textureBufferId;                            // The OpenGL texture ID
 };
 
-/* Offset to have static texture IDs externally */
-int textureNumOffset = 0;
-
 /* List of texture to quickly be used with the ID */
 struct Texture *textureList;
 

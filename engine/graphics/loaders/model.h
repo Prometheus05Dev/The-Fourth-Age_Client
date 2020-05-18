@@ -18,9 +18,6 @@ struct Model {
     unsigned int numIndices;    // Number of indices
 };
 
-/* Offset to have static IDs externally */
-int modelNumOffset = 0;
-
 /* List of models to access them quickly by ID */
 struct Model *modelList;
 

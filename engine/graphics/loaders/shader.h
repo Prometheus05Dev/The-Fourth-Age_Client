@@ -10,9 +10,6 @@ struct Shader {
     int         shaderProgram;  // The shader program ID
 };
 
-/* Offset to have static shader IDs externally */
-int shaderNumOffset = 0;
-
 /* List of shaders to be quickly used with the ID */
 struct Shader *shaderList;
 
