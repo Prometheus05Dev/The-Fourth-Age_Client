@@ -5,7 +5,6 @@ void RMG_setBasePath(char *path) {
 }
 
 void RMG_loadResources() {
-
 }
 
 char *RMG_getType(char *objectName) {
@@ -59,10 +58,42 @@ char **getFilesInDir(char *path) {
             }
             else {
                 closedir(readDir);
+                return returnList;
             }
         }
     }
     else {
         printf("[ResourceManager]\thas been called with an invalid path!\n");
+        char *t = "\0";
+        return *t;
     }
+}
+
+char *combineStrings(char *str1, char *str2) {
+    int  length = 0;
+    int oldStringLength = 0;
+    char *out;
+    for     (int i = 0; i < 200; i++) {
+        if      (str1[i] != '\0') {
+            length++;
+            out = realloc(out, length * sizeof(char));
+            out[i] = str1[i];
+        }
+        else {
+            oldStringLength = length;
+            break;
+        }
+    }
+    for     (int j = oldStringLength; j < 200; j++) {
+        if      (str2[j - oldStringLength] != '\0') {
+            length++;
+            out = realloc(out, length * sizeof(char));
+            out[j] = str2[j - oldStringLength];
+        }
+        else {
+            out[length] = '\0';
+            break;
+        }
+    }
+    return out;
 }

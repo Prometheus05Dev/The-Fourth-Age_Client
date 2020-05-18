@@ -29,6 +29,9 @@ char *basePath;
 /* Returns list of Files in a directory */
 char **getFilesInDir        (char *path);
 
+/* Combines two strings and outputs their combined result */
+char *combineStrings        (char *str1, char* str2);
+
 /* This function sets the base path with the value returned from the console input in main.c */
 void RMG_setBasePath        (char *path);
 
