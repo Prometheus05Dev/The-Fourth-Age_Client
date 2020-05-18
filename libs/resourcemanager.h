@@ -5,6 +5,16 @@
 #ifndef THE_FOURTH_AGE_RESOURCEMANAGER_H
 #define THE_FOURTH_AGE_RESOURCEMANAGER_H
 
+/* For memory management, particularly used in array resizement */
+#include <stdlib.h>
+
+/* For reading the paths and the files in a directory */
+#include <dirent.h>
+#include <string.h>
+
+/* For debug logging */
+#include <stdio.h>
+
 /* After the objects first get loaded, they get an internal resource manager ID for faster access to the paths */
 char **names;           // The name of the object to retrieve the ID
 char **type;            // Contains the type of the object
@@ -15,6 +25,9 @@ char **shaderPaths;     // The path to the appropriate shader
 
 /* The base path of the game assets */
 char *basePath;
+
+/* Returns list of Files in a directory */
+char **getFilesInDir        (char *path);
 
 /* This function sets the base path with the value returned from the console input in main.c */
 void RMG_setBasePath        (char *path);
