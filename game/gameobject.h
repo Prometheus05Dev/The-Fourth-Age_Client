@@ -18,23 +18,23 @@ int numGameObjects = 0;
 
 /* Adds a new GameObject and inserts it into the gameObjectList
  * Adds 1 to the numGameObjects*/
-int  addGameObject          ();
+int  GOJ_addGameObject          ();
 
 /* Figures out which GameObjects are in the area of the player by using the playerPos coordinates.
  * If one moved inside the area, adds an object for it.
  * If one moved outside the area, removes its object to prevent it from being rendered */
-void updateGameObjects      (float playerPosX, float playerPosY, float playerPosZ);
+void GOJ_updateGameObjects      (float playerPosX, float playerPosY, float playerPosZ);
 
 /* Adds to the position of the GameObject.
  * If in sight, executes animation and changes location of object */
-void moveGameObject         (int  id, float x, float y, float z);
+void GOJ_moveGameObject         (int  id, float x, float y, float z);
 
 /* Changes the position of the GameObject.
  * If in sight, executes animation and changes location of the object */
-void moveGameObjectToPos    (int  id, float x, float y, float z);
+void GOJ_moveGameObjectToPos    (int  id, float x, float y, float z);
 
 /* Removes the GameObject from the list.
  * Removes 1 from the numGameObjects */
-void removeGameObject       ();
+void GOJ_removeGameObject       ();
 
 #endif //THE_FOURTH_AGE_GAMEOBJECT_H

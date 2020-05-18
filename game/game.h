@@ -10,15 +10,15 @@ float playerPosY = 0.0f;        // The Y coordinates
 float playerPosZ = 0.0f;        // The Z coordinates
 
 /* To be called at the game start, sets everything up and adds game objects */
-void gameStart          ();
+void GAM_gameStart          ();
 
 /* The main game loop to be called every game tick */
-void gameUpdate         ();
+void GAM_gameUpdate         ();
 
 /* Gets called by the processInput of the game window, updates the player coordinates */
-void movePlayer         (float x, float y, float z);
+void GAM_movePlayer         (float x, float y, float z);
 
 /* Calls the stop of everything in game/, frees variables and deletes all game objects */
-void gameStop           ();
+void GAM_gameStop           ();
 
 #endif //THE_FOURTH_AGE_GAME_H
