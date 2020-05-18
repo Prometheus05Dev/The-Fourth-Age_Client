@@ -3,11 +3,20 @@
 #ifndef THE_FOURTH_AGE_TIME_H
 #define THE_FOURTH_AGE_TIME_H
 
+/* To get access to the GLFW high-precision timer */
+#include <GLFW/glfw3.h>
+
+/* To get access to memory management functions */
+#include <stdlib.h>
+
 /* A structure containing the necessary information for a new Timer */
 struct Timer {
     double startTime;       // The starting time of the timer which is the application time at creating the timer
-    int    isSleeping;      // 0 = is sleeping 1 = is not sleeping
+    int    isSleeping;      // 0 = is not sleeping 1 = is sleeping
 };
+
+/* A variable containing the amount of timers */
+int timerCount = 0;
 
 /* Contains a list of timers. */
 struct Timer *timers;
@@ -29,9 +38,6 @@ void   TIM_updateDeltaTime      ();
 
 /* Returns the time since the application has been started. */
 double TIM_getApplicationTime   ();
-
-/* Lets the public timer sleep for a given amount of time. */
-void   TIM_applicationSleep     (double time);
 
 /* Adds a new timer to the timers list and sets it to the current application time
  * and returns the ID of the timer.*/
