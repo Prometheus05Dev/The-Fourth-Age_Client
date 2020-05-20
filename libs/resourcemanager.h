@@ -23,6 +23,9 @@ char **animationNames;  // The path to the appropriate EAF.
 char **modelNames;      // The path to the appropriate PMF.
 char **shaderNames;     // The path to the appropriate shader.
 
+/* Object count to iterate through arrays */
+int objectCount = 0;
+
 /* The base path of the game assets. */
 char *basePath;
 
@@ -51,6 +54,6 @@ char *RMG_getModel          (char *objectName);
 char *RMG_getAnimation      (char *objectName);
 
 /* Returns the shader path for a shader name. */
-char *RMG_getShader         (char *shaderName);
+char *RMG_getShader         (char *objectName);
 
 #endif //THE_FOURTH_AGE_RESOURCEMANAGER_H

@@ -137,27 +137,65 @@ void RMG_loadResources() {
         fclose(tmpFileShaderPath);
         fclose(tmpFileAnimationPath);
         currentLine = 0;
+
+        /* Increase object count */
+        objectCount++;
     }
 }
 
 char *RMG_getType(char *objectName) {
-    return "NULL";
+    int id;
+    for     (id = 0; id < objectCount; id++) {
+        if      (strcmp(objectName, &names[id]) == 0) {
+            return &types[id];
+        }
+    }
+    printf("[ResourceManager]\tTexture of %s could not be found!\n", objectName);
+    return '\0';
 }
 
 char *RMG_getTexture(char *objectName) {
-    return "NULL";
+    int id;
+    for     (id = 0; id < objectCount; id++) {
+        if      (strcmp(objectName, &names[id]) == 0) {
+            return &textureNames[id];
+        }
+    }
+    printf("[ResourceManager]\tTexture of %s could not be found!\n", objectName);
+    return '\0';
 }
 
 char *RMG_getModel(char *objectName) {
-    return "NULL";
+    int id;
+    for     (id = 0; id < objectCount; id++) {
+        if      (strcmp(objectName, &names[id]) == 0) {
+            return &modelNames[id];
+        }
+    }
+    printf("[ResourceManager]\tTexture of %s could not be found!\n", objectName);
+    return '\0';
 }
 
 char *RMG_getAnimation(char *objectName) {
-    return "NULL";
+    int id;
+    for     (id = 0; id < objectCount; id++) {
+        if      (strcmp(objectName, &names[id]) == 0) {
+            return &animationNames[id];
+        }
+    }
+    printf("[ResourceManager]\tTexture of %s could not be found!\n", objectName);
+    return '\0';
 }
 
-char *RMG_getShader(char *shaderName) {
-    return "NULL";
+char *RMG_getShader(char *objectName) {
+    int id;
+    for     (id = 0; id < objectCount; id++) {
+        if      (strcmp(objectName, &names[id]) == 0) {
+            return &shaderNames[id];
+        }
+    }
+    printf("[ResourceManager]\tTexture of %s could not be found!\n", objectName);
+    return '\0';
 }
 
 char **getFilesInDir(char *path, int  *numContents) {
