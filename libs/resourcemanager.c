@@ -5,6 +5,139 @@ void RMG_setBasePath(char *path) {
 }
 
 void RMG_loadResources() {
+    /* Variables containing the paths. */
+    char *animationPath;
+    char *texturePath;
+    char *modelPath;
+    char *shaderPath;
+    char *configPath;
+
+    /* Contains a list of objects constructed through the configs and
+     * the amount of objects. */
+    char **objectList;
+    int  objectCount;
+
+    /* Construct the paths. */
+    animationPath   = combineStrings(basePath, "animations/");
+    texturePath     = combineStrings(basePath, "textures/");
+    modelPath       = combineStrings(basePath, "models/");
+    shaderPath      = combineStrings(basePath, "/shaders");
+    configPath      = combineStrings(basePath, "/configs");
+
+    /* Fill in the objectList */
+    objectList = getFilesInDir(configPath, &objectCount);
+
+    /* Temporary variables to read files */
+    size_t maxLineLength = 255;
+    char *line = malloc(maxLineLength * sizeof(char));
+    int  currentLine = 0;
+    char *objectName;
+    char *objectType;
+    char *objectModelName;
+    char *objectTextureName;
+    char *objectShaderName;
+    char *objectAnimationName;
+    FILE *tmpFileModelPath;
+    FILE *tmpFileTexturePath;
+    FILE *tmpFileShaderPath;
+    FILE *tmpFileAnimationPath;
+
+    /* Reads the config files in object lists,
+     * tries to open the files set there,
+     * if it fails exits with error code,
+     * else pushes it back in appropriate array */
+    for     (int i = 0; i < objectCount; i++) {
+        FILE *tmpFile;      // A temporary file to open the config path.
+        tmpFile = fopen(combineStrings(configPath, &objectList[i]), "r");
+        /* Check if file could be opened */
+        if  (!tmpFile) {
+            printf("[ResourceManager]\treturned critical error: Calculated config path could not be found!\n");
+            return;
+        }
+
+        /* Read the file line by line */
+        while   (fgets(line, maxLineLength, tmpFile)) {
+            switch  (currentLine) {
+                case 0:
+                    /* Line 1, here is the object name. */
+                    sscanf(line, "%s", &objectName);
+                    currentLine++;
+                case 1:
+                    /* Line 2, here is the object type. */
+                    sscanf(line, "%s", &objectType);
+                    currentLine++;
+                case 2:
+                    /* Line 3, here is the model name. */
+                    sscanf(line, "%s", &objectModelName);
+                    currentLine++;
+                case 3:
+                    /* Line 4, here is the texture name. */
+                    sscanf(line, "%s", &objectTextureName);
+                    currentLine++;
+                case 4:
+                    /* Line 5, here is the shader name. */
+                    sscanf(line, "%s", &objectShaderName);
+                    currentLine++;
+                case 5:
+                    /* Line 6, here is the animation name. */
+                    sscanf(line, "%s", &objectAnimationName);
+                    currentLine++;
+                default:
+                    /* Not posible, throws error. */
+                    printf("[ResourceManager]\tencountered critical error, config of object in invalid path reading line: %s\n", line);
+                    return;
+            }
+        }
+
+        /* Test if the files are existing.
+         * For this create the test paths.*/
+        // Test the model path.
+        tmpFileModelPath = fopen(combineStrings(modelPath, objectModelName), "r");
+        if      (!tmpFileModelPath) {
+            printf("[ResourceManager]\tcould not open model file of %s\n", objectName);
+            return;
+        }
+        // Test the texture path.
+        tmpFileTexturePath = fopen(combineStrings(texturePath, objectTextureName), "r");
+        if      (!tmpFileTexturePath) {
+            printf("[ResourceManager]\tcould not open texture file of %s\n", objectName);
+            return;
+        }
+        // Test the shader path.
+        tmpFileShaderPath = fopen(combineStrings(shaderPath, objectShaderName), "r");
+        if      (!tmpFileShaderPath) {
+            printf("[ResourceManager]\tcould not open shader file of %s\n", objectName);
+            return;
+        }
+        // Test the animation path.
+        tmpFileAnimationPath = fopen(combineStrings(animationPath, objectAnimationName), "r");
+        if      (!tmpFileAnimationPath) {
+            printf("[ResourceManager]\tcould not open animation file of %s\n", objectName);
+            return;
+        }
+
+        /* Push the values back to the appropriate lists */
+        names[i] = *objectName;
+        types[i] = *objectType;
+        textureNames[i] = *objectTextureName;
+        animationNames[i] = *objectAnimationName;
+        modelNames[i] = *objectModelName;
+        shaderNames[i] = *objectShaderName;
+
+        /* Clean up the variables */
+        line = '\0';
+        objectName = '\0';
+        objectType = '\0';
+        objectTextureName = '\0';
+        objectAnimationName = '\0';
+        objectModelName = '\0';
+        objectShaderName = '\0';
+        fclose(tmpFileModelPath);
+        fclose(tmpFileTexturePath);
+        fclose(tmpFileShaderPath);
+        fclose(tmpFileAnimationPath);
+        currentLine = 0;
+    }
 }
 
 char *RMG_getType(char *objectName) {
@@ -27,12 +160,12 @@ char *RMG_getShader(char *shaderName) {
     return "NULL";
 }
 
-char **getFilesInDir(char *path) {
-    char *currentFile;
-    char **returnList;
+char **getFilesInDir(char *path, int  *numContents) {
+    char *currentFile;      // A temporary variable containing the name of the current file.
+    char **returnList;      // A variable containing the list which will be returned.
 
-    int numFiles = 0;
-    int numLetters = 0;
+    int numFiles = 0;       // Containing the current amount of files in the directory.
+    int numLetters = 0;     // Containing the current amount of letters in the file name.
 
     DIR *readDir;
     struct dirent *readDirEntry;
@@ -42,14 +175,17 @@ char **getFilesInDir(char *path) {
             if      (strcmp(readDirEntry->d_name, ".") && strcmp(readDirEntry->d_name, "..")) {
                 for     (int i = 0; i < 256; i++) {
                     if      (readDirEntry->d_name[i] != '\0') {
+                        /* Adds letter of current directory to the name of the directory */
                         numLetters++;
                         currentFile = realloc(currentFile, numLetters * sizeof(char));
                         currentFile[i] = readDirEntry->d_name[i];
                     }
                     else {
+                        /* Adds current directory name to the returnList */
                         numFiles++;
                         returnList = realloc(returnList, numFiles * sizeof(char*));
                         returnList[numFiles - 1] = currentFile;
+                        /* Resets variables */
                         numLetters = 0;
                         currentFile = malloc(1 * sizeof(char));
                         break;
@@ -57,7 +193,9 @@ char **getFilesInDir(char *path) {
                 }
             }
             else {
+                /* Finished reading directory, closes the directory and returns the returnList. */
                 closedir(readDir);
+                *numContents = numFiles;
                 return returnList;
             }
         }
@@ -70,9 +208,11 @@ char **getFilesInDir(char *path) {
 }
 
 char *combineStrings(char *str1, char *str2) {
-    int  length = 0;
-    int oldStringLength = 0;
+    int  length = 0;            // The length of str1 + str2.
+    int  oldStringLength = 0;   // The length of str1.
     char *out;
+    /* Supposes the string is null-terminated and reads str1 as well as sets oldStringLength and Length.
+     * Reallocates memory for the out  list. */
     for     (int i = 0; i < 200; i++) {
         if      (str1[i] != '\0') {
             length++;
@@ -84,6 +224,8 @@ char *combineStrings(char *str1, char *str2) {
             break;
         }
     }
+    /* Uses the oldStringLength to access the proper element of the array and reallocates memory
+     * for the out list and returns it. */
     for     (int j = oldStringLength; j < 200; j++) {
         if      (str2[j - oldStringLength] != '\0') {
             length++;
