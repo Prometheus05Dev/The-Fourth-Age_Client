@@ -1,6 +1,8 @@
 #ifndef THE_FOURTH_AGE_MATHS_H
 #define THE_FOURTH_AGE_MATHS_H
 
+#include <stdio.h>
+
 typedef struct vec3 {
     float x;
     float y;
@@ -14,18 +16,26 @@ typedef struct vec4 {
     float w;
 } vec4;
 
-typedef vec4 mat4[3][3];
+typedef vec4 mat4[4];
 
-void MAT_initializeMat4Zero         (mat4 matrix);
+void MAT_addVec4                (vec4  *source, vec4  add);
 
-void MAT_initializeMat4One          (mat4 matrix);
+void MAT_addVec3                (vec3  *source, vec3  add);
 
-void MAT_initializeVec3Zero         (vec3 vector);
+void MAT_subVec4                (vec4  *source, vec4  sub);
 
-void MAT_initializeVec3One          (vec3 vector);
+void MAT_subVec3                (vec3  *source, vec3  sub);
 
-void MAT_initializeVec4Zero         (vec4 vector);
+void MAT_mulVec4                (vec4  *source, float scalar);
 
-void MAT_initializeVec4One          (vec4 vector);
+void MAT_mulVec3                (vec3  *source, float scalar);
+
+void MAT_crossVec4              (vec4  *source, vec4  cross);
+
+void MAT_crossVec3              (vec3  *source, vec3  cross);
+
+void MAT_dotVec4                (vec4  *source, vec4  cross);
+
+void MAT_dotVec3                (vec3  *source, vec3  cross);
 
 #endif //THE_FOURTH_AGE_MATHS_H
