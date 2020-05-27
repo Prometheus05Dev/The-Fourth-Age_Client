@@ -38,4 +38,8 @@ void MAT_dotVec4                (vec4  *source, vec4  cross);
 
 void MAT_dotVec3                (vec3  *source, vec3  cross);
 
+void MAT_identityMat4           (mat4  *source);
+
+void MAT_dotMat4                (mat4  *source, mat4  mul);
+
 #endif //THE_FOURTH_AGE_MATHS_H

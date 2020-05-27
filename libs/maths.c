@@ -61,3 +61,23 @@ void MAT_dotVec3            (vec3 *source, vec3 cross) {
     source->y   *=  cross.y;
     source->z   *=  cross.z;
 }
+
+void MAT_identityMat4       (mat4 *source) {
+    source[0]->x    =   1.0f;
+    source[1]->y    =   1.0f;
+    source[2]->z    =   1.0f;
+    source[3]->w    =   1.0f;
+}
+
+void MAT_dotMat4(mat4 *source, mat4  mul) {
+    for     (int i = 0; i < 4; i++) {
+        source[i]->x    =   source[i]->x * mul[0].x + source[i]->y * mul[1].x +
+                            source[i]->z * mul[2].x + source[i]->w * mul[3].x;
+        source[i]->y    =   source[i]->x * mul[0].y + source[i]->y * mul[1].y +
+                            source[i]->z * mul[2].y + source[i]->w * mul[3].y;
+        source[i]->z    =   source[i]->x * mul[0].z + source[i]->y * mul[1].z +
+                            source[i]->z * mul[2].z + source[i]->w * mul[3].z;
+        source[i]->w    =   source[i]->x * mul[0].w + source[i]->y * mul[1].w +
+                            source[i]->z * mul[2].w + source[i]->w * mul[3].w;
+    }
+}
